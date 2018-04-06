@@ -1,0 +1,40 @@
+#' Newton-Raphson estimation
+#' Bradley-Terry-Luce
+#' 
+#' @param x data matrix of proportions
+#' @param convergence Numeric vector length 2.  Inner convergence criteria and
+#'   outer convergence criteria.
+#' @param loop_size Numeric vector length 2.  Inner maximum loops and outer
+#'   maximum loops.
+estimate <- function(x, convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100)) {
+  N <- dim(x)[1]
+  # set initial estimates
+  b <- rep(0, N)
+  
+  iterate_b_inner <- matrix(NA, nrow = loop_size[1], ncol = dim(x)[2]) # betas from inner loop
+  convergence <- matrix(NA, nrow = loop_size[2], ncol = dim(x)[2]) # betas from the outer loop
+  se <- matrix(NA, nrow = N, ncol = 1)
+  
+  for (ot in 2:loop_size[2]) {  # outer loop
+  	for (n in 1:N) {            # person loop
+  		bm <- b[which(!is.na(x[n, ]))]
+  		for (i in 2:loop_size[1]) {
+  			probs <- exp(b[n] - bm) / (1 + exp(b[n] - bm))
+  			fp <- sum(probs) - sum(x[n,], na.rm = TRUE)   # first deriviative
+  			fpp <- sum(probs * (1 - probs))
+  			b[n] <- b[n] - fp / fpp
+  			v[i, n] <- b[n]
+  			if (!is.na(v[i, n]) & !is.na(v[i - 1, n]) & 
+  					abs(v[i, n] - v[i-1, n]) <= convergence_criteria[1]) break}
+  		se[n, ] <- 1 / sqrt(fpp)
+  	}
+  	b <- b - mean(b)
+  	convergence[ot, ] <- b
+  	if (!is.na(convergence[ot, ]) & !is.na(convergence[ot-1, ]) &
+  			max(abs(convergence[ot, ] - convergence[ot-1, ])) < convergence_criteria[2]) break
+  }
+  results <- data.frame(b, se)
+  attr(results, "convergence") <- list(convergence_matrix = convergence_matrix)
+  results
+}
+  			
