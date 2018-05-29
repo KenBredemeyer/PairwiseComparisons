@@ -3,7 +3,7 @@
 #' data matrix returned for estimation.
 #'
 #' @param x A data frame containing the raw results from pairwise comparisons
-format_data <- function(x) {
+pairs_format <- function(x) {
 	options(stringsAsFactors = FALSE)
 	x <- pref_codes(x)
 	x <- left_preferred(x)
@@ -13,9 +13,9 @@ format_data <- function(x) {
 	x <- data_matrix
 	x <- remove_xtrms(x)
 	xtrm <- xtrms(x)
-  x <- proportions(x)
 
   attr(x, "data_matrix") <- list(data_matrix)
   attr(x, "extremes") <- list(xtrm)
   x
 }
+

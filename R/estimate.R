@@ -18,11 +18,13 @@ estimate <- function(x, convergence_criteria = c(0.001, 0.001), loop_size = c(30
 
   for (ot in 2:loop_size[2]) {  # outer loop
   	for (n in 1:N) {            # person loop
-  		bm <- b[which(!is.na(x[n, ]))]
+  		comparisons_i <- which(!is.na(x[n, ]))
+  		bm <- b[comparisons_i]
+  		involved <- x[n, comparisons_i] + x[comparisons_i, n]
   		for (i in 2:loop_size[1]) {
   			probs <- exp(b[n] - bm) / (1 + exp(b[n] - bm))
-  			fp <- sum(probs) - sum(x[n,], na.rm = TRUE)   # first deriviative
-  			fpp <- sum(probs * (1 - probs))
+  			fp <- sum(involved * probs) - sum(x[n,], na.rm = TRUE)   # first deriviative
+  			fpp <- sum(involved * probs * (1 - probs))
   			b[n] <- b[n] - fp / fpp
   			iterate_b_inner[i, n] <- b[n]
   			if (!is.na(iterate_b_inner[i, n]) & !is.na(iterate_b_inner[i - 1, n]) &
@@ -34,7 +36,7 @@ estimate <- function(x, convergence_criteria = c(0.001, 0.001), loop_size = c(30
   	if (!any(is.na(convergence[ot, ])) & !any(is.na(convergence[ot-1, ])) &
   			max(abs(convergence[ot, ] - convergence[ot-1, ])) < convergence_criteria[2]) break
   }
-  results <- data.frame(b, se)
+  results <- data.frame(name = dimnames(x)[[2]], b, se)
   attr(results, "convergence") <- list(convergence = convergence)
   results
 }
