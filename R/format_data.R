@@ -3,6 +3,7 @@
 #' data matrix returned for estimation.
 #'
 #' @param x A data frame containing the raw results from pairwise comparisons
+#' @export
 pairs_format <- function(x) {
 	options(stringsAsFactors = FALSE)
 	x <- pref_codes(x)

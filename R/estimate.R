@@ -6,6 +6,7 @@
 #'   outer convergence criteria.
 #' @param loop_size Numeric vector length 2.  Inner maximum loops and outer
 #'   maximum loops.
+#' @export
 estimate <- function(x, convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100)) {
   N <- dim(x)[1]
   # set initial estimates

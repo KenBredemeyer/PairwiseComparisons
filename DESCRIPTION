@@ -1,0 +1,12 @@
+Package: PairwiseComparisons
+Type: Package
+Title: BTL modelling for pairwise comparisons
+Version: 0.0.9999
+Author: Ken Bredemeyer
+Maintainer: Ken Bredemeyer <21833472@student.uwa.edu.au>
+Description: Fits the Bradley-Terry-Luce model to pairwise comparison data
+    and provides graphical and statistical tests of fit.
+License: GPL3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
