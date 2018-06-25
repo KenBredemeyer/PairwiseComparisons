@@ -96,13 +96,18 @@ remove_xtrms <- function(data_matrix) {
 		}
 		if (dim(data_matrix)[1] < 3) stop("data matrix too small. check nested extremes.")
 	}
-  attr(data_matrix, "extremes") <- list(low_extremes = low_xtrm, high_extremes = high_xtrm)
+  attr(data_matrix, "extremes") <- list(c(unlist(low_xtrm), unlist(high_xtrm)))
 	data_matrix
 }
 
 # extract extremes
 xtrms <- function(data_matrix) {
-	extremes <- attributes(data_matrix)$extremes
+	extremes <- attributes(data_matrix)$extremes[[1]]
+}
+
+# extract full data matrix
+full_matrix <- function(data_matrix) {
+	full_matrix <- attributes(data_matrix)$data_matrix[[1]]
 }
 
 # convert data matrix to proportions --------------------------------------
@@ -119,4 +124,5 @@ proportions <- function(data_matrix) {
 	colnames(p_matrix) <- colnames(data_matrix)
 	p_matrix
 }
+
 
