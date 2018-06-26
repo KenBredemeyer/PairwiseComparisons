@@ -18,8 +18,8 @@ pairs_format2 <- function(x, judges = "all", criteria = "all", sum_across = c("j
 	options(stringsAsFactors = FALSE)
 	# allow a 2D or 3D array to be returned.  Must sum across judges, or criteria, or both
 	stopifnot(any(sum_across == "judges") | any(sum_across == "criteria"))
-	if (length(judges) == 1 && judges == "all") judges <- judges(x)
-	if (length(criteria) == 1 && criteria == "all") criteria <- criteria(x)
+	if (length(judges) == 1 && judges == "all") judges <- unique(x$Judge)
+	if (length(criteria) == 1 && criteria == "all") criteria <- unique(x$Criteria)
 	x <- pref_codes(x)
 	x <- left_preferred(x)
   x <- complete_comparisons2(x)
@@ -27,7 +27,7 @@ pairs_format2 <- function(x, judges = "all", criteria = "all", sum_across = c("j
 	                Item ~ Item.1 ~ Judge ~ Criteria,
 	                drop = FALSE,
 	                value.var = "Selected")
-  x <- x[ , , judges, criteria]
+  x <- x[ , , judges, criteria, drop = FALSE]
   if (any(sum_across == "judges") && any(sum_across == "criteria")) {
 	  # flatten to data matrix
 	  x <- apply(x, 1:2, sum2)
@@ -54,7 +54,7 @@ criteria <- function(x) unique(x$Criteria)
 complete_comparisons2 <- function(x) {
 	zero_win_rows <- vector()
 	j <- 1
-	Judges <- unique(test_tile_tower$Judge)
+	Judges <- unique(x$Judge)
 	for (i in 1:nrow(x)) {
 		judge <- x[i, "Judge"]
 		criterion <- x[i, "Criteria"]
