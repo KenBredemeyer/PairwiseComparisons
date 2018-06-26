@@ -4,7 +4,9 @@ complete_comparisons2 <- function(x) {
 	Judges <- unique(test_tile_tower$Judge)
 	for (i in 1:nrow(x)) {
 		judge <- x[i, "Judge"]
-		if(!any(x[x$Judge == judge , "Item.1"] == x[i, "Item"] & x[x$Judge == judge , "Item"] == x[i, "Item.1"])) {
+		criterion <- x[i, "Criteria"]
+		if(!any(x[x$Judge == judge & x$Criteria == criterion, "Item.1"] == x[i, "Item"] &
+				    x[x$Judge == judge  & x$Criteria == criterion, "Item"] == x[i, "Item.1"])) {
 	    zero_win_rows[j] <- i
 	    j <- j+1
 		}
