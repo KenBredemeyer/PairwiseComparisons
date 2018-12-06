@@ -2,7 +2,7 @@
 #'
 #' Interactive use for pairwise formating, estimation, and fit statistics.
 #' @export
-startPW <- function() {
+startPW <- function(hold_plot = FALSE) {
 	fileIn <- file.choose()
 
 	if (substring(fileIn, nchar(fileIn)-2, nchar(fileIn)) == "csv") {
@@ -259,12 +259,12 @@ startPW <- function() {
 	par(bg = "antiquewhite")     # set background colour
 	xx <- seq(-13, 13, 0.01)
 
-	rm(y)                        # remove previously defined "y"
+	                       # remove previously defined "y"
 	y <- vector("numeric", length(xx))
 	# store mean proportion and ability for each CI for all scripts
 	means_all <- vector("list", nrow(p_data))
 
-	par(ask = TRUE)
+	par(ask = hold_plot)
 	for (n in 1:nrow(p_data)) {
 	  # calculate mean proportions & mean locations
 	  compare <- data.table(comparison[[n]])
