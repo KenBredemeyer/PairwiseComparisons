@@ -1,7 +1,7 @@
 #' Newton-Raphson estimation
 #' Bradley-Terry-Luce
 #'
-#' @param x data matrix of proportions
+#' @param x data matrix of counts
 #' @param convergence Numeric vector length 2.  Inner convergence criteria and
 #'   outer convergence criteria.
 #' @param loop_size Numeric vector length 2.  Inner maximum loops and outer
