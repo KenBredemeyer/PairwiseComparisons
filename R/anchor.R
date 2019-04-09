@@ -9,7 +9,9 @@
 #'   attribute from \code{remove_xtrms}.
 #' @param betas Numeric vector of betas estimated from \code{estimate}
 #' @export
-estimate_anch <- function(x, extremes, betas, convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100)) {
+estimate_anch <- function(x, extremes, betas,
+	adjust_extreme = 0.25,
+	convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100)) {
    # which are extremes
 	 extrm_i <- match(extremes, dimnames(x)[[2]])    # faster than colnames
    # which are not extremes
@@ -34,7 +36,7 @@ estimate_anch <- function(x, extremes, betas, convergence_criteria = c(0.001, 0.
   		for (i in 2:loop_size[1]) {
   			probs <- exp(b[n] - bm) / (1 + exp(b[n] - bm))
   			if (any(n == extrm_i)) {                ## CHANGE TO HIGH AND LOW EXTREME
-	  			fp <- sum(involved * probs) - (sum(x[n,], na.rm = TRUE) - 0.25)  # first deriviative
+	  			fp <- sum(involved * probs) - (sum(x[n,], na.rm = TRUE) - adjust_extreme)  # first deriviative
   			} else {
   				fp <- sum(involved * probs) - sum(x[n,], na.rm = TRUE)
   			}
