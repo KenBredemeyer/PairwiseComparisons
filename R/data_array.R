@@ -36,7 +36,7 @@ pairs_format2 <- function(x, judges = "all", criteria = "all", sum_across = c("j
   } else if (all(sum_across == "criteria")) {
   	x <- apply(x, 1:3, sum2)
   }
-  x
+  data.frame(x)
 }
 
 
