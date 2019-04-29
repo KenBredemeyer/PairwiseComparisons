@@ -60,8 +60,15 @@ data_matrix <- function(x) {
 }
 
 # remove xtrms ------------------------------------------------------------
-# remove nested extremes.  High and low extremes returned
-# as attributes of the reduced data matrix
+
+#' Remove extremes
+#'
+#' Remove nested extremes.  High and low extremes returned as
+#' attributes of the reduced data matrix.
+#'
+#' @param data_matrix full data matrix, possibly containing extremes.
+#'
+#' @export
 remove_xtrms <- function(data_matrix) {
 	d <- dim(data_matrix)
 	high_xtrm <- list()
@@ -100,12 +107,23 @@ remove_xtrms <- function(data_matrix) {
 	data_matrix
 }
 
-# extract extremes
+#' extract extremes
+#' @export
 xtrms <- function(data_matrix) {
 	extremes <- attributes(data_matrix)$extremes[[1]]
 }
 
-# extract full data matrix
+#' detect extremes
+#'
+#' @param x data matrix of pairwise comparison proportions or counts
+#' @return TRUE if any columns or rows contain only 0 or NA, FALSE otherwise.
+#' @export
+has_extremes <- function(x) {
+	any(colSums(x, na.rm = TRUE) == 0 | rowSums(x, na.rm = TRUE) == 0)
+}
+
+#' extract full data matrix
+#' @export
 full_matrix <- function(data_matrix) {
 	full_matrix <- attributes(data_matrix)$data_matrix[[1]]
 }
