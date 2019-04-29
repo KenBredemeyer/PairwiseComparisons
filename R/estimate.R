@@ -98,3 +98,21 @@ estimate2 <- function(x, convergence_criteria = c(0.001, 0.001), loop_size = c(3
 }
 
 
+#' Estimate BTL Parameters
+#'
+#' Estimate ability.
+#' @param x data matrix of pairwise comparisons
+#' @param adjust_extreme Adjustment for extremes
+#' @export
+estimate_betas <- function(x, adjust_extreme = 0.25) {
+	if(has_extremes(x)) {
+		x_small <- remove_xtrms(x)
+		x_extremes <- xtrms(x_small)
+		betas_small <- estimate(x_small)
+		betas <- estimate_anch(x, x_extremes, betas_small$b, adjust_extreme = adjust_extreme)
+	} else {
+		betas <- estimate(x)
+	}
+	betas
+}
+
