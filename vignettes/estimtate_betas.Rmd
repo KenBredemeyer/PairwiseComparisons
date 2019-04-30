@@ -1,0 +1,65 @@
+---
+title: "Pairwise Estimation"
+author: "Ken Bredemeyer"
+date: "29 April 2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Estimating Ability Locations with the PairwiseComparisons package
+## Simple Estimation
+load package:
+```{r load}
+library(PairwiseComparisons)
+```
+
+Use the 2018 Graduate Teacher Performace Assessment as an example. 
+
+Create a data matrix with `pairs_format2`.  If no extremes, estimate with `estimate`.
+
+```{r}
+gtpa_dm <- pairs_format2(gtpa18)
+has_extremes(gtpa_dm)
+betas <- estimate(gtpa_dm)
+head(betas, 4)
+```
+
+## Partitioning 
+Partion the GTPA data on judges:
+```{r partition}
+judge_set1.dm <- pairs_format2(gtpa18, judges = 1:20) 
+judge_set2.dm <- pairs_format2(gtpa18, judges = 21:40)
+
+has_extremes(judge_set1.dm)
+has_extremes(judge_set2.dm)
+```
+Judge set 1 has no extremes and judge set 2 has extremes
+Estimate judge set 1 as above:
+```{r}
+judge_set1.betas <- estimate(judge_set1.dm)
+```
+Estimate judge set 2 by first removing extremes, then anchoring on the betas with extremes removed:
+```{r extremes}
+judge_set2.dm_small <- remove_xtrms(judge_set2.dm)
+# which performances are extreme (extreme performance labels are stored as attributes of ... .dm_small
+judge_set2.extremes <- xtrms(judge_set2.dm_small)
+# estimate with extremes removed
+judge_set2.betas_small <- estimate(judge_set2.dm_small)
+# estimate, anchoring on betas with extremes removed
+judge_set2.betas <- estimate_anch(judge_set2.dm, judge_set2.extremes, judge_set2.betas_small$b)
+
+head(judge_set2.betas)
+```
+
+## Alternatively - 
+Use `estimate_betas`:
+```{r faster}
+js1.betas <- estimate_betas(judge_set1.dm)
+js2.betas <- estimate_betas(judge_set2.dm)
+```
+`estimate_betas` wraps above workflow, using `estimate_anch`.
