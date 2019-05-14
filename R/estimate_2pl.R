@@ -49,7 +49,7 @@ estimate_2pl <- function(x,
 		  		involved <- x[n, comparisons_i] + x[comparisons_i, n]
 		  		for (i in 2:max_iterations["inner_loop"]) {
 		  			probs <- exp(alpha[n] * (beta_m - beta[n])) / (1 + exp(alpha[n] * (beta_m - beta[n])))        # vector of probabilities for each comparison
-		  			fp_alpha <- sum((beta_m - beta[n]) * (na.omit(x[n]) - t(involved * probs)))                   # scalar
+		  			fp_alpha <- sum((beta_m - beta[n]) * (na.omit(x[ , n]) - t(involved * probs)))                   # scalar
 		  			fpp_alpha <- sum(involved * probs * (involved - involved * probs) * (beta_m - beta[n])^2)     # scalar
 		  			alpha[n] <- alpha[n] - fp_alpha * (-1) / fpp_alpha
 		  			iterate_a_inner[i, n] <- alpha[n]
