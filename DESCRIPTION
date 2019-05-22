@@ -12,4 +12,6 @@ LazyData: true
 RoxygenNote: 6.1.0
 Imports:
     reshape2,
-    magrittr
+    magrittr,
+    data.table,
+    plyr
