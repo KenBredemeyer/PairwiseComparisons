@@ -116,7 +116,8 @@ xtrms <- function(data_matrix) {
 #' detect extremes
 #'
 #' @param x data matrix of pairwise comparison proportions or counts
-#' @return TRUE if any columns or rows contain only 0 or NA, FALSE otherwise.
+#' @return TRUE if any columns or rows of \code{x} contain only 0 or NA, FALSE
+#'   otherwise.
 #' @export
 has_extremes <- function(x) {
 	any(colSums(x, na.rm = TRUE) == 0 | rowSums(x, na.rm = TRUE) == 0)

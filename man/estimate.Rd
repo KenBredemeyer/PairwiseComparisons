@@ -5,10 +5,11 @@
 \title{Newton-Raphson estimation
 Bradley-Terry-Luce}
 \usage{
-estimate(x, convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100))
+estimate(x, convergence_criteria = c(0.001, 0.001), loop_size = c(30,
+  100))
 }
 \arguments{
-\item{x}{data matrix of proportions}
+\item{x}{data matrix of counts}
 
 \item{loop_size}{Numeric vector length 2.  Inner maximum loops and outer
 maximum loops.}

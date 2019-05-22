@@ -4,11 +4,11 @@
 \alias{estimate_anch}
 \title{Newton-Raphson estimation Bradley-Terry-Luce}
 \usage{
-estimate_anch(x, extremes, betas, convergence_criteria = c(0.001, 0.001),
-  loop_size = c(30, 100))
+estimate_anch(x, extremes, betas, adjust_extreme = 0.25,
+  convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100))
 }
 \arguments{
-\item{x}{full data matrix (proportions)}
+\item{x}{full data matrix of comparisons}
 
 \item{extremes}{Character vector of extreme performance names (returned as an
 attribute from \code{remove_xtrms}.}
