@@ -1,7 +1,19 @@
 #' Judge Characteristic Curves
+#'
+#' Plot left/right difference in logits against proportion of left selected for
+#' each class interval.  Overlay probability curve.
+#'
+#' @param comparisons Data frame of comparisons with variables \code{Judge,
+#'   Item, Item.1, Selected} and optionally \code{Criteria}.
+#' @param estimates Data frame which inclues performance names and their
+#'   estimated location in logits.
+#' @param class_intervals Integer specifying the number of class intervals to
+#'   form.
+#'
 #' @export
-plot_JCC <- function(comparisons, estimates, class_intervals) {
-	stopifnot(exists(comparisons$Judge), exists(estimates$b), class_intervals %% 1 == 0)
+plot_JCCs <- function(comparisons, estimates, class_intervals) {
+	stopifnot(!is.null(comparisons$Judge), !is.null(estimates$b), class_intervals %% 1 == 0,
+		!any(is.na(estimates$b)))
 	judges_comparisons <- split(comparisons, comparisons$Judge)
 	judge_names <- attributes(judges_comparisons)$names
 
@@ -13,7 +25,7 @@ plot_JCC <- function(comparisons, estimates, class_intervals) {
 		# calculate difference in betas for each judges' comparisons
 		judge_comparisons_betas <- dplyr::left_join(judges_comparisons[[judge_i]], estimates,
 			                                          by = c("Item" = "name"))
-		judge_comparisons_betas <- left_join(judge_comparisons_betas, estimates,
+		judge_comparisons_betas <- dplyr::left_join(judge_comparisons_betas, estimates,
 	                                      by = c("Item.1" = "name"), suffix = c("_left", "_right"))
 		judge_comparisons_betas <- cbind(judge_comparisons_betas, b_diff=judge_comparisons_betas$b_left - judge_comparisons_betas$b_right)
 
@@ -23,6 +35,9 @@ plot_JCC <- function(comparisons, estimates, class_intervals) {
     # count left wins
 		judge_comparisons_betas <- cbind(judge_comparisons_betas,
 			                               left_wins = (judge_comparisons_betas$Selected == judge_comparisons_betas$Item) * 1)
+
+		# add class interval numbers
+		judge_comparisons_betas <- ci_index(judge_comparisons_betas, class_intervals)
 
 		# calculate observed proportions
 		ci_proportions <- aggregate(judge_comparisons_betas[, "left_wins"], list(judge_comparisons_betas$ci_index), proportion)
