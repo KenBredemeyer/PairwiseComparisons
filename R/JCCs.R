@@ -44,7 +44,11 @@ plot_JCCs <- function(comparisons, estimates, class_intervals) {
     ci_means <- aggregate(judge_comparisons_betas[, "b_diff"], list(judge_comparisons_betas$ci_index), mean)
 
     # plot
-    plot(ci_means$x, ci_proportions$x, xlim = c(min(ci_means$x)-2, max(ci_means$x)+2), ylim = c(0, 1))
+    plot(ci_means$x, ci_proportions$x,
+    	   xlim = c(min(ci_means$x)-2, max(ci_means$x)+2), ylim = c(0, 1),
+         main = judge_names[judge_i], sub = "Judge Characteristic Curve",
+         xlab = "Logit Difference",
+         ylab = "Expected Value")
     lines(x, y, col = "red")
 	}
 }
