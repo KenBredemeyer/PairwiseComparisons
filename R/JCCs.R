@@ -36,8 +36,9 @@ plot_JCCs <- function(comparisons, estimates, class_intervals) {
 		judge_comparisons_betas <- cbind(judge_comparisons_betas,
 			                               left_wins = (judge_comparisons_betas$Selected == judge_comparisons_betas$Item) * 1)
 
-		# add class interval numbers
+		# add class interval numbers and extract ci counts
 		judge_comparisons_betas <- ci_index(judge_comparisons_betas, class_intervals)
+		ci_numbers <-  ci_counts(judge_comparisons_betas)
 
 		# calculate observed proportions
 		ci_proportions <- aggregate(judge_comparisons_betas[, "left_wins"], list(judge_comparisons_betas$ci_index), proportion)
@@ -45,10 +46,12 @@ plot_JCCs <- function(comparisons, estimates, class_intervals) {
 
     # plot
     plot(ci_means$x, ci_proportions$x,
-    	   xlim = c(min(ci_means$x)-2, max(ci_means$x)+2), ylim = c(0, 1),
+    	   xlim = c(min(ci_means$x)-2, max(ci_means$x)+2), ylim = c(0, 1.08),
          main = judge_names[judge_i], sub = "Judge Characteristic Curve",
          xlab = "Logit Difference",
          ylab = "Expected Value")
+    text(ci_means$x, ci_proportions$x, col = "cornflowerblue",
+    	   labels = ci_numbers, pos = 3, offset = 0.5)
     lines(x, y, col = "red")
 	}
 }
@@ -69,7 +72,7 @@ ci_index <- function(x, class_intervals) {
 
 # return class interval counts
 ci_counts <- function(x) {
-  counts <- attributes(xxx)$ci_counts
+  counts <- attributes(x)$ci_counts[[1]]
   if (!exists("counts"))
   	stop("argument must be a data.frame returned from ci_index()")
   counts
