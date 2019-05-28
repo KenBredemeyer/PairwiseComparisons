@@ -75,3 +75,18 @@ complete_comparisons2 <- function(x) {
   x
 }
 
+
+
+#' return array
+#' @export
+pairs_array <- function(x) {
+	options(stringsAsFactors = FALSE)
+
+	x <- pref_codes(x)
+	x <- left_preferred(x)
+  x <- complete_comparisons2(x)
+  x <- reshape2::acast(x,
+	                Item ~ Item.1 ~ Judge ~ Criteria,
+	                drop = FALSE,
+	                value.var = "Selected")
+}
