@@ -39,11 +39,13 @@ z <- function(x, P.mat) {
 #' @param x 4D data array of binary pairwise comparison outcomes.
 #' @param beta Numeric vector of location estimates for each performance
 #' @param type Outfit statistic type: "performance", "judge", or "criterion".
+#'
+#' @return Data frame of names and outfit statistics.
 #' @export
 outfit <- function(x, beta, type = "performance") {
 	outfit_type <- switch(type, performance = 1, judge = 3, criterion = 4)
 	prob_matrix <- probs(beta)
 	z_array <- z(x, prob_matrix)
 	outfit_statistics <- apply(z_array, outfit_type, function(x) sum(x^2, na.rm = TRUE)/sum(!is.na(x)))
-	outfit_statistics
+	cbind(dimnames(x)[[outfit_type]], outfit_statistics)
 }
