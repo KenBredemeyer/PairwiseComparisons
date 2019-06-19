@@ -15,10 +15,10 @@ probs <- function(beta) {
 
 # calculate z for every (binary) cell of 4-D array, and return array
 z <- function(x, P.mat) {
-	stopifnot(dim(x)[1:2] == dim(P.mat))
+	stopifnot(dim(x)[1:2] == dim(P.mat))  # test if x is 4D or less
 	z_score <- array(NA, dim = dim(x))
-	for (l in seq_len(dim(x)[4])) {
-		for (k in seq_len(dim(x)[3])) {
+	for (l in seq_len(dim(x)[4])) {  # need to use this only if x is 4D (criteria present)
+		for (k in seq_len(dim(x)[3])) {  # only if judges present!
 			for (j in seq_len(dim(x)[2])) {
 				for (i in seq_len(dim(x)[1])) {
 					if (!is.na(x[i, j, k, l])) {
@@ -29,4 +29,19 @@ z <- function(x, P.mat) {
 		}
 	}
 	z_score
+}
+
+
+#' Item Outfit
+#'
+#' Return outfit test statistics for each performance.
+#'
+#' @param x Data array of binary pairwise comparison outcomes.
+#' @param beta Numeric vector of location estimates for each performance
+#' @export
+item_outfit <- function(x, beta) {
+	prob_matrix <- probs(beta)
+	z_array <- z(x, prob_matrix)
+	outfit_statistics <- apply(z_array, 1, function(x) sum(x^2, na.rm = TRUE)/sum(!is.na(x)))
+	outfit_statistics
 }
