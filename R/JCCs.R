@@ -9,9 +9,11 @@
 #'   estimated location in logits.
 #' @param class_intervals Integer specifying the number of class intervals to
 #'   form.
+#' @param sub_title Character vector, the same length as the number of plot to
+#'   return, to use as a sub-title in the plots.
 #'
 #' @export
-plot_JCCs <- function(comparisons, estimates, class_intervals) {
+plot_JCCs <- function(comparisons, estimates, class_intervals, sub_title = NULL) {
 	stopifnot(!is.null(comparisons$Judge), !is.null(estimates$b), class_intervals %% 1 == 0,
 		!any(is.na(estimates$b)))
 
@@ -51,7 +53,7 @@ plot_JCCs <- function(comparisons, estimates, class_intervals) {
     # plot
     plot(ci_means$x, ci_proportions$x,
     	   xlim = c(min(ci_means$x)-2, max(ci_means$x)+2), ylim = c(0, 1.08),
-         main = judge_names[judge_i], sub = "Judge Characteristic Curve",
+         main = judge_names[judge_i], sub = sub_title[[judge_i]],
          xlab = "Logit Difference",
          ylab = "Expected Value")
     text(ci_means$x, ci_proportions$x, col = "cornflowerblue",
