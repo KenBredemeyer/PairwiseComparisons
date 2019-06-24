@@ -53,9 +53,10 @@ plot_JCCs <- function(comparisons, estimates, class_intervals, sub_title = NULL)
     # plot
     plot(ci_means$x, ci_proportions$x,
     	   xlim = c(min(ci_means$x)-2, max(ci_means$x)+2), ylim = c(0, 1.08),
-         main = judge_names[judge_i], sub = sub_title[[judge_i]],
+         main = judge_names[judge_i],
          xlab = "Logit Difference",
          ylab = "Expected Value")
+    mtext(sub_title[[judge_i]], side=3)
     text(ci_means$x, ci_proportions$x, col = "cornflowerblue",
     	   labels = ci_numbers, pos = 3, offset = 0.5)
 
