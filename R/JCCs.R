@@ -1,5 +1,4 @@
 #' Judge Characteristic Curves
-<<<<<<< HEAD
 #'
 #' Plot left/right difference in logits against proportion of left selected for
 #' each class interval.  Overlay probability curve.
@@ -15,11 +14,7 @@
 plot_JCCs <- function(comparisons, estimates, class_intervals) {
 	stopifnot(!is.null(comparisons$Judge), !is.null(estimates$b), class_intervals %% 1 == 0,
 		!any(is.na(estimates$b)))
-=======
-#' @export
-plot_JCC <- function(comparisons, estimates, class_intervals) {
-	stopifnot(exists(comparisons$Judge), exists(estimates$b), class_intervals %% 1 == 0)
->>>>>>> 60ab128d1a7715f7e3d37297247cd5b3de14e6e7
+
 	judges_comparisons <- split(comparisons, comparisons$Judge)
 	judge_names <- attributes(judges_comparisons)$names
 
@@ -31,11 +26,9 @@ plot_JCC <- function(comparisons, estimates, class_intervals) {
 		# calculate difference in betas for each judges' comparisons
 		judge_comparisons_betas <- dplyr::left_join(judges_comparisons[[judge_i]], estimates,
 			                                          by = c("Item" = "name"))
-<<<<<<< HEAD
+
 		judge_comparisons_betas <- dplyr::left_join(judge_comparisons_betas, estimates,
-=======
-		judge_comparisons_betas <- left_join(judge_comparisons_betas, estimates,
->>>>>>> 60ab128d1a7715f7e3d37297247cd5b3de14e6e7
+
 	                                      by = c("Item.1" = "name"), suffix = c("_left", "_right"))
 		judge_comparisons_betas <- cbind(judge_comparisons_betas, b_diff=judge_comparisons_betas$b_left - judge_comparisons_betas$b_right)
 
@@ -46,19 +39,16 @@ plot_JCC <- function(comparisons, estimates, class_intervals) {
 		judge_comparisons_betas <- cbind(judge_comparisons_betas,
 			                               left_wins = (judge_comparisons_betas$Selected == judge_comparisons_betas$Item) * 1)
 
-<<<<<<< HEAD
+
 		# add class interval numbers and extract ci counts
 		judge_comparisons_betas <- ci_index(judge_comparisons_betas, class_intervals)
 		ci_numbers <-  ci_counts(judge_comparisons_betas)
 
-=======
->>>>>>> 60ab128d1a7715f7e3d37297247cd5b3de14e6e7
 		# calculate observed proportions
 		ci_proportions <- aggregate(judge_comparisons_betas[, "left_wins"], list(judge_comparisons_betas$ci_index), proportion)
     ci_means <- aggregate(judge_comparisons_betas[, "b_diff"], list(judge_comparisons_betas$ci_index), mean)
 
     # plot
-<<<<<<< HEAD
     plot(ci_means$x, ci_proportions$x,
     	   xlim = c(min(ci_means$x)-2, max(ci_means$x)+2), ylim = c(0, 1.08),
          main = judge_names[judge_i], sub = "Judge Characteristic Curve",
@@ -66,9 +56,7 @@ plot_JCC <- function(comparisons, estimates, class_intervals) {
          ylab = "Expected Value")
     text(ci_means$x, ci_proportions$x, col = "cornflowerblue",
     	   labels = ci_numbers, pos = 3, offset = 0.5)
-=======
-    plot(ci_means$x, ci_proportions$x, xlim = c(min(ci_means$x)-2, max(ci_means$x)+2), ylim = c(0, 1))
->>>>>>> 60ab128d1a7715f7e3d37297247cd5b3de14e6e7
+
     lines(x, y, col = "red")
 	}
 }
