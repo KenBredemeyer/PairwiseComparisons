@@ -47,5 +47,6 @@ outfit <- function(x, beta, type = "performance") {
 	prob_matrix <- probs(beta)
 	z_array <- z(x, prob_matrix)
 	outfit_statistics <- apply(z_array, outfit_type, function(x) sum(x^2, na.rm = TRUE)/sum(!is.na(x)))
-	cbind(dimnames(x)[[outfit_type]], outfit_statistics)
+	rv <- data.frame(ID = dimnames(x)[[outfit_type]], outfit = outfit_statistics)
+	rv
 }
