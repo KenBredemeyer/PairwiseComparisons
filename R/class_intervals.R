@@ -3,6 +3,12 @@
 #' @param x data matrix, ordered on location
 #' @param b Numeric vector. Locations returned from \code{estimate}
 #' @param nci Integer.  Number of class intervals
+#'
+#' @return A list of numeric matrices, one matrix for each performance, showing
+#'   the performances it was involved with, and for each of these, the
+#'   proportion, location and class interval used for Person Characteristic
+#'   Curve.
+#'
 #' @export
 class_intervals <- function(x, b, nci) {
 #numbers of comparisons per script
