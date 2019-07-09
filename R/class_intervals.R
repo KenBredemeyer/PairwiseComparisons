@@ -12,41 +12,27 @@
 #' @export
 class_intervals <- function(x, b, nci) {
 #numbers of comparisons per script
-	nc <- apply(x, 2, function(x) length(na.omit(x)))
-	message(paste0(" Min comparisons per script is ", min(nc)))
+	number_comparisons <- apply(x, 2, function(x) length(na.omit(x)))
+	message(paste0(" Min comparisons per script is ", min(number_comparisons)))
 
-	pw <- vector("list", ncol(x)-1)
-	index <- vector("list", ncol(x)-1)                    # index is a list of which ordered scripts are involved in the comparison
-	index <- apply(x, 2, function(x) which(!is.na(x)))
-	index <- lapply(index, function(x) unname(x, force = TRUE))
+	ci_numbers <- vector("list", ncol(x)-1)      # class interval numbers
+	comparisons_i <- vector("list", ncol(x)-1)                    # comparisons_i is a list of which ordered scripts are involved in the comparison
+	comparisons_i <- apply(x, 2, function(x) which(!is.na(x)))
+	comparisons_i <- lapply(comparisons_i, function(x) unname(x, force = TRUE))   # do I need this?
 
-	for (i in 1:length(index)) {
-	  cicn <- (length(index[[i]]))/nci  #   average number of scripts in each class interval
-	  l_o <- cicn - floor(cicn)
-
-	  r1 <- (1 - l_o) * nci
-	  r2 <- l_o*nci
-	  a <- rep(floor(cicn), round(r1, 0))
-	  bb <- rep(ceiling(cicn), round(r2, 0))
-	  a <- data.frame(a)                            # rbind.fill needs data frames as arguments.
-	  bb <- data.frame(bb)
-	  pw.r <- vector("numeric", r1+r2)
-	  pw.r <- na.omit(unlist(plyr::rbind.fill(a, bb)))   # na.omit removes NA formed by rbind.fill  (not NAs in data)
-
-	  ci_number <- 1:nci        # class interval number
-	  pw[[i]] <- rep(ci_number, round(pw.r, 0))
+	for (c_i in 1:length(comparisons_i)) {
+    div <- length(comparisons_i[[c_i]]) %/% nci
+    rem <- length(comparisons_i[[c_i]]) %% nci
+    etc <- c(rep(0, nci-rem), rep(1, rem))
+	  ci_numbers[[c_i]] <- rep(1:nci, div+etc)
 	}
-
-	comparisons <- cbind(unname(x[index[[2]], 2]), b[(index[[2]])], pw[[2]])
 
 	# Create a matrix of comparisons for each script (a list of matrices)
 	comparison <- vector("list", nrow(x))
 	for (i in 1:nrow(x)) {
-	  comparison[[i]] <- cbind(unname(x[index[[i]], i]), b[(index[[i]])], pw[[i]])
+	  comparison[[i]] <- cbind(unname(x[comparisons_i[[i]], i]), b[(comparisons_i[[i]])], ci_numbers[[i]])
 	  colnames(comparison[[i]]) <- c("Proportions", "Locations", "class interval")
 	}
-	if (!is.null(names(b))) {
-		names(comparison) <- names(b)
-	}
+	names(comparison) <- colnames(x)
 	comparison
 }
