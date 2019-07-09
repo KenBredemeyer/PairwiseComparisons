@@ -1,6 +1,6 @@
 #' Form class intervals
 #'
-#' @param x data matrix, ordered on location
+#' @param x data matrix of proportions, ordered on location
 #' @param b Numeric vector. Locations returned from \code{estimate}
 #' @param nci Integer.  Number of class intervals
 #'
