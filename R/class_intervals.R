@@ -39,5 +39,8 @@ class_intervals <- function(x, b, nci) {
 	  comparison[[i]] <- cbind(unname(x[index[[i]], i]), b[(index[[i]])], pw[[i]])
 	  colnames(comparison[[i]]) <- c("Proportions", "Locations", "class interval")
 	}
+	if (!is.null(names(b))) {
+		names(comparison) <- names(b)
+	}
 	comparison
 }
