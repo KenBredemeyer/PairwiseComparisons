@@ -130,6 +130,9 @@ full_matrix <- function(data_matrix) {
 }
 
 # convert data matrix to proportions --------------------------------------
+
+#' Convert data matrix to proportions
+#' @export
 proportions <- function(data_matrix) {
 	p_matrix <- matrix(NA, nrow = nrow(data_matrix), ncol = ncol(data_matrix))
 	for (i in 1:nrow(data_matrix)) {
