@@ -17,8 +17,8 @@ class_intervals <- function(x, b, nci) {
 
 	ci_numbers <- vector("list", ncol(x)-1)      # class interval numbers
 	comparisons_i <- vector("list", ncol(x)-1)                    # comparisons_i is a list of which ordered scripts are involved in the comparison
-	comparisons_i <- apply(x, 2, function(x) which(!is.na(x)))
-	comparisons_i <- lapply(comparisons_i, function(x) unname(x, force = TRUE))   # do I need this?
+	comparisons_i <- lapply(split(x,seq(ncol(x))), function(x) which(!is.na(x)))
+	#comparisons_i <- lapply(comparisons_i, function(x) unname(x, force = TRUE))   # do I need this?
 
 	for (c_i in 1:length(comparisons_i)) {
     div <- length(comparisons_i[[c_i]]) %/% nci
