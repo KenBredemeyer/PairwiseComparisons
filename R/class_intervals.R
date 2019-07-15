@@ -31,7 +31,7 @@ class_intervals <- function(data_matrix, locations, n_class_intervals) {
 	comparison <- vector("list", nrow(data_matrix))
 	for (i in 1:nrow(data_matrix)) {
 	  comparison[[i]] <- cbind(unname(data_matrix[comparisons_i[[i]], i]), locations[(comparisons_i[[i]])], ci_numbers[[i]])
-	  colnames(comparison[[i]]) <- c("Proportions", "Locations", "class interval")
+	  colnames(comparison[[i]]) <- c("Proportions", "Locations", "class_interval")
 	}
 	names(comparison) <- colnames(data_matrix)
 	comparison
