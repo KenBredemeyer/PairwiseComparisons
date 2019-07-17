@@ -42,13 +42,15 @@ pairs_format2 <- function(x, judges = "all", criteria = "all", sum_across = c("j
 
 #' List all judges
 #' @param x data.frame containing the variable \code{Judge}
+#' @return Character vector of all judge names in the data set.
 #' @export
-judges <- function(x) unique(x$Judge)
+return_judges <- function(x) unique(x$Judge)
 
 #' List all criteria
 #' @param x data.frame containing the variable \code{Criteria}
+#' @return Character vector of all criteria names in the data set.
 #' @export
-criteria <- function(x) unique(x$Criteria)
+return_criteria <- function(x) unique(x$Criteria)
 
 
 complete_comparisons2 <- function(x) {
