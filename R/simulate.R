@@ -4,6 +4,7 @@
 #' @param distribution Character, either \code{"normal"} or \code{"uniform"}.
 #'
 #' @return data.frame of performances and locations.
+#' @export
 sim_betas <- function(performances, distribution = "normal", mean, sd, min, max) {
   stopifnot(any(distribution == c("uniform", "normal")))
 	if (distribution == "normal" && missing(mean) && missing(sd)) {
@@ -34,6 +35,7 @@ sim_betas <- function(performances, distribution = "normal", mean, sd, min, max)
 #'   the discrimination parameter as a property of judges.
 #' @param criteria_alpha Vector equal in length to the number of criteria, providing
 #'   the discrimination parameter as a property of criteria.
+#' @export
 simulate_pw <- function(performances, pairs, judges, criteria=1,
 	                      judge_alpha=1, criteria_alpha=1) {
   if (is.numeric(judges) && length(judges) == 1) {
@@ -74,6 +76,7 @@ simulate_pw <- function(performances, pairs, judges, criteria=1,
 		}
 	  judge_col <- rep(judges[[judge_i]], nrow(judgements[[judge_i]]))
 		sim_judgements[[judge_i]] <- cbind(judge_col, criteria_col, judgements[[judge_i]], Selected)
+		colnames(sim_judgements[[judge_i]])[1:4] <- c("Judges", "Criteria", "Item", "Item.1")
 	}
 
 	do.call(rbind, sim_judgements)
