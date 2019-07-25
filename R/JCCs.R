@@ -14,6 +14,7 @@
 #'
 #' @export
 plot_JCCs <- function(comparisons, estimates, class_intervals, sub_title = NULL) {
+	if ("location" %in% names(performances)) estimates$beta <- estimates$location
 	stopifnot(!is.null(comparisons$Judge), !is.null(estimates$b), class_intervals %% 1 == 0,
 		!any(is.na(estimates$b)))
 
@@ -55,7 +56,8 @@ plot_JCCs <- function(comparisons, estimates, class_intervals, sub_title = NULL)
     	   xlim = c(min(ci_means$x)-2, max(ci_means$x)+2), ylim = c(0, 1.08),
          main = judge_names[judge_i],
          xlab = "Logit Difference",
-         ylab = "Expected Value")
+         ylab = "Expected Value",
+    	    pch = 16)
     mtext(sub_title[[judge_i]], side=3)
     text(ci_means$x, ci_proportions$x, col = "cornflowerblue",
     	   labels = ci_numbers, pos = 3, offset = 0.5)
