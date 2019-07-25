@@ -76,7 +76,7 @@ simulate_pw <- function(performances, pairs, judges, criteria=1,
 		}
 	  judge_col <- rep(judges[[judge_i]], nrow(judgements[[judge_i]]))
 		sim_judgements[[judge_i]] <- cbind(judge_col, criteria_col, judgements[[judge_i]], Selected)
-		colnames(sim_judgements[[judge_i]])[1:4] <- c("Judges", "Criteria", "Item", "Item.1")
+		colnames(sim_judgements[[judge_i]])[1:4] <- c("Judge", "Criteria", "Item", "Item.1")
 	}
 
 	do.call(rbind, sim_judgements)
