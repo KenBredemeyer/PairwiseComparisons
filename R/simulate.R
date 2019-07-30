@@ -33,11 +33,9 @@ sim_betas <- function(performances, distribution = "normal", mean, sd, min, max)
 #'   vector giving the names of criteria.
 #' @param judge_alpha Vector equal in length to the number of judges, providing
 #'   the discrimination parameter as a property of judges.
-#' @param criteria_alpha Vector equal in length to the number of criteria, providing
-#'   the discrimination parameter as a property of criteria.
 #' @export
 simulate_pw <- function(performances, pairs, judges, criteria=1,
-	                      judge_alpha=1, criteria_alpha=1) {
+	                      judge_alpha =1) {
   if (is.numeric(judges) && length(judges) == 1) {
   	judges <- paste0("Judge_", formatC(1:judges, width = nchar(judges), format = "d", flag = "0"))
   }
@@ -45,7 +43,7 @@ simulate_pw <- function(performances, pairs, judges, criteria=1,
   	criteria <- paste0("Criterion_", formatC(1:criteria, width = nchar(criteria), format = "d", flag = "0"))
   }
 
-	P <- function(b1, b2, alpha=1) {
+	P <- function(b1, b2, alpha) {
 		exp(alpha*(b1 - b2)) / (1 + exp(alpha*(b1 - b2)))
 	}
 
@@ -64,7 +62,7 @@ simulate_pw <- function(performances, pairs, judges, criteria=1,
 		}
 
 		left_wins <- stats::rbinom(dim(judgements[[judge_i]])[1], 1,
-	                           P(judgements[[judge_i]][,"left_beta"], judgements[[judge_i]][,"right_beta"]))
+	                           P(judgements[[judge_i]][,"left_beta"], judgements[[judge_i]][,"right_beta"], judge_alpha[judge_i]))
 
 		Selected <- vector("character", length = length(left_wins))
 		for (i in 1:length(left_wins)) {
