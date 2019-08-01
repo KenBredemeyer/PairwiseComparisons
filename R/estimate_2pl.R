@@ -1,4 +1,5 @@
 #' Estimate parameters of the two parameter logistic model
+#' @export
 estimate_2pl <- function(x,
                          convergence_criteria = c(0.01, 0.01, 0.01, 0.01, 0.001),
 												 max_iterations = c(outer_loop = 20, beta_loop = 20, alpha_loop = 20, inner_loop = 20)) {
@@ -70,5 +71,5 @@ estimate_2pl <- function(x,
 
 
 	}
-	return(data.frame(location = beta, discrimination = alpha, se = se_beta))
+	return(data.frame(performance = rownames(x), location = beta, discrimination = alpha, se = se_beta))
 }
