@@ -13,7 +13,7 @@
 #'
 #' @export
 plot_PCCs <- function(data_matrix, betas, class_intervals = 4, performances = "all") {
-  stopifnot(class(data_matrix) == "data.frame" && class(betas) == "numeric")
+  stopifnot(class(betas) == "numeric")
 
 	comparison <- class_intervals(data_matrix, betas, class_intervals)
 
