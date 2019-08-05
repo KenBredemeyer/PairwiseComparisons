@@ -58,7 +58,7 @@ estimate_2pl <- function(x,
 		  					abs(iterate_b_inner[i, n] - iterate_b_inner[i-1, n]) <= convergence_criteria[3]) break}
 		  		se_alpha[n, ] <- 1 / sqrt(fpp_alpha)
 		  	}
-		  	#alpha <- alpha - geo_mean(alpha)
+		  	alpha <- alpha / geo_mean(alpha)
 		  	convergence_alpha[alpha_loop_i, ] <- alpha
 		  	if (!any(is.na(convergence_alpha[alpha_loop_i, ])) & !any(is.na(convergence_alpha[alpha_loop_i -1, ])) &
 		  			max(abs(convergence_alpha[alpha_loop_i, ] - convergence_alpha[alpha_loop_i -1, ])) < convergence_criteria[4]) break
