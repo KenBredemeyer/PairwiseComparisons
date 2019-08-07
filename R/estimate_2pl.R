@@ -64,12 +64,13 @@ estimate_2pl <- function(x,
 		  			max(abs(convergence_alpha[alpha_loop_i, ] - convergence_alpha[alpha_loop_i -1, ])) < convergence_criteria[4]) break
 		}
 
-		# constrain alpha within item sets & centre using geometric mean of all alphas
-
 		#if (!any(is.na(convergence[outer_loop_i, ])) & !any(is.na(convergence[outer_loop_i -1, ])) &
 		#  max(abs(convergence[outer_loop_i , ] - convergence[outer_loop_i -1, ])) < convergence_criteria[5]) break
 
-
 	}
-	return(data.frame(performance = rownames(x), location = beta, discrimination = alpha, se = se_beta))
+	result <- data.frame(performance = rownames(x),
+		                   location = round(beta, 3),
+		                   discrimination = round(alpha, 3),
+		                   se = round(se_beta, 3))
+	result
 }
