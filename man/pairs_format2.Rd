@@ -19,9 +19,9 @@ Item.1, Selected}.}
 \code{c("judges", "criteria")}}
 }
 \value{
-A data matrix (2D) if \code{sum_across = "judges"} or
-  \code{sum_across = "criteria"}, or if \code{sum_across = c("judges",
-  "criteria")} then a 3D array is returned.
+A data matrix (2D) of comparisons if \code{sum_across = c("judges",
+  "criteria")}. If \code{sum_across = "judges"} or \code{sum_across =
+  "criteria"}, then a 3D array is returned.
 }
 \description{
 Sum across criteria to estimate judge discrimination, and sum across judges

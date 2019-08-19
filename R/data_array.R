@@ -10,9 +10,9 @@
 #' @param sum_across Character vector. \code{"judges"}, \code{"criteria"} or
 #'   \code{c("judges", "criteria")}
 #'
-#' @return A data matrix (2D) if \code{sum_across = "judges"} or
-#'   \code{sum_across = "criteria"}, or if \code{sum_across = c("judges",
-#'   "criteria")} then a 3D array is returned.
+#' @return A data matrix (2D) of comparisons if \code{sum_across = c("judges",
+#'   "criteria")}. If \code{sum_across = "judges"} or \code{sum_across =
+#'   "criteria"}, then a 3D array is returned.
 #' @export
 pairs_format2 <- function(x, judges = "all", criteria = "all", sum_across = c("judges", "criteria")) {
 	options(stringsAsFactors = FALSE)
