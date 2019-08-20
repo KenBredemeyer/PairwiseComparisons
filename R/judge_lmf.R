@@ -54,8 +54,8 @@ judge_lmf <- function(x,
           for (alpha_i in 1:njudges) {   # gather information across "virtual items"
             comparisons_i_judge[[alpha_i]] <- which(!is.na(x[n, , alpha_i]))
             beta_m_judge[[alpha_i]] <- beta[comparisons_i_judge[[alpha_i]]]
-            probs_judge[[alpha_i]] <- exp(alpha[alpha_i] * (beta[n] - beta_m)) /
-                	                   (1 + exp(alpha[alpha_i] * (beta[n] - beta_m)))
+            probs_judge[[alpha_i]] <- exp(alpha[alpha_i] * (beta[n] - beta_m_judge[[alpha_i]])) /
+                	                   (1 + exp(alpha[alpha_i] * (beta[n] - beta_m_judge[[alpha_i]])))
             dm_counts_judge[[alpha_i]] <- x[n , , alpha_i]
             involved_judge[[alpha_i]] <- na.omit(x[n , , alpha_i]) + na.omit(x[ , n, alpha_i])
 
