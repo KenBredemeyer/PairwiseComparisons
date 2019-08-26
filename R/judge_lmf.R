@@ -59,8 +59,8 @@ judge_lmf <- function(x,
             dm_counts_judge[[alpha_i]] <- x[n , , alpha_i]
             involved_judge[[alpha_i]] <- na.omit(x[n , , alpha_i]) + na.omit(x[ , n, alpha_i])
 
-            fp_beta_judge[[alpha_i]] <- alpha[[alpha_i]] * sum(involved_judge[[alpha_i]] * probs_judge[[alpha_i]])
-                                      - alpha[[alpha_i]] * sum(dm_counts_judge[[alpha_i]], na.rm = TRUE)
+            fp_beta_judge[[alpha_i]] <- alpha[[alpha_i]] * sum(involved_judge[[alpha_i]] * probs_judge[[alpha_i]]) -
+                                        alpha[[alpha_i]] * sum(dm_counts_judge[[alpha_i]], na.rm = TRUE)
             fpp_beta_judge[[alpha_i]] <- alpha[[alpha_i]]^2 * sum(involved_judge[[alpha_i]] *
                                                  probs_judge[[alpha_i]] * (1 - probs_judge[[alpha_i]]))
           }
@@ -90,7 +90,7 @@ judge_lmf <- function(x,
       beta <- beta - mean(beta)
       # beta convergence and stopping criterion
       convergence_beta[beta_loop_i-1, ] <- beta
-      if (!any(is.na(convergence_beat[beta_loop_i, ])) && !any(is.na(convergence_beta[beta_loop_i -1, ])) &&
+      if (!any(is.na(convergence_beta[beta_loop_i, ])) && !any(is.na(convergence_beta[beta_loop_i -1, ])) &&
         max(abs(convergence_beta[beta_loop_i, ] - convergence_beta[beta_loop_i -1, ])) < convergence_criteria[2]) {
         break
       }
@@ -98,13 +98,13 @@ judge_lmf <- function(x,
 
     # discrimination -------------------------------------------------------------------------------------
     for (alpha_loop_i in 2:max_iterations["alpha_loop"]) {
-      for (n in 1:N) {                                        # Person loop
+      for (n in 1:npersons) {                                        # Person loop
         for (i in 2:max_iterations["inner_loop"]) {           # inner loop
           for (alpha_i in 1:njudges) {                          #  judge loop
             comparisons_i_judge[[alpha_i]] <- which(!is.na(x[n, , alpha_i]))
             beta_m_judge[[alpha_i]] <- beta[comparisons_i_judge[[alpha_i]]]
-            probs_judge[[alpha_i]] <- exp(alpha[alpha_i] * (beta[n] - beta_m)) /
-                	                   (1 + exp(alpha[alpha_i] * (beta[n] - beta_m)))
+            probs_judge[[alpha_i]] <- exp(alpha[alpha_i] * (beta[n] - beta_m_judge[[alpha_i]])) /
+                	                   (1 + exp(alpha[alpha_i] * (beta[n] - beta_m_judge[[alpha_i]])))
             dm_counts_judge[[alpha_i]] <- x[n, , alpha_i]
             involved_judge[[alpha_i]] <- na.omit(x[n, , alpha_i]) + na.omit(x[ , n, alpha_i])
           	fp_alpha_judge[[alpha_i]] <- sum((beta_m_judge[[alpha_i]] - beta[n]) *
@@ -131,9 +131,12 @@ judge_lmf <- function(x,
     			max(abs(convergence_alpha[alpha_loop_i, ] - convergence_alpha[alpha_loop_i -1, ])) < convergence_criteria[4]) {break}
     }
   }
-  result <- data.frame(performance = rownames(x),
-  		                   location = round(beta, 3),
-  		                   discrimination = round(alpha, 3),
-  		                   se = round(se_beta, 3))
+  result <- list(Performances = data.frame(performance = rownames(x),
+  		                                     location = round(beta, 3),
+  		                                     se = round(se_beta, 3)),
+                 Judges = data.frame(names = dimnames(x)[[3]],
+                                     discrimination = round(alpha, 3))
+                 )
+
   result
 }
