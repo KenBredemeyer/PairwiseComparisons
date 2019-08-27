@@ -101,22 +101,21 @@ judge_lmf <- function(x,
       for (n in 1:npersons) {                                        # Person loop
         for (i in 2:max_iterations["inner_loop"]) {           # inner loop
           for (alpha_i in 1:njudges) {                          #  judge loop
-            comparisons_i_judge[[alpha_i]] <- which(!is.na(x[n, , alpha_i]))
+            comparisons_i_judge[[alpha_i]] <- which(!is.na(x[ , n, alpha_i]))
             beta_m_judge[[alpha_i]] <- beta[comparisons_i_judge[[alpha_i]]]
             probs_judge[[alpha_i]] <- exp(alpha[alpha_i] * (beta[n] - beta_m_judge[[alpha_i]])) /
                 	                   (1 + exp(alpha[alpha_i] * (beta[n] - beta_m_judge[[alpha_i]])))
-            dm_counts_judge[[alpha_i]] <- x[n, , alpha_i]
+            dm_counts_judge[[alpha_i]] <- x[n , , alpha_i]
             involved_judge[[alpha_i]] <- na.omit(x[n, , alpha_i]) + na.omit(x[ , n, alpha_i])
           	fp_alpha_judge[[alpha_i]] <- sum((beta_m_judge[[alpha_i]] - beta[n]) *
           	               (na.omit(dm_counts_judge[[alpha_i]]) - t(involved_judge[[alpha_i]] * probs_judge[[alpha_i]])))
-          	fpp_alpha_judge[[alpha_i]] <- sum(involved_judge[[alpha_i]] * probs_judge[[alpha_i]] *
-          	                (involved_judge[[alpha_i]] - involved_judge[[alpha_i]] * probs_judge[[alpha_i]]) *
-          	                (beta_m_judge[[alpha_i]] - beta[n])^2)
+          	fpp_alpha_judge[[alpha_i]] <- sum(involved_judge[[alpha_i]]^2 * probs_judge[[alpha_i]] *
+          	                (1 -  probs_judge[[alpha_i]]) * (beta_m_judge[[alpha_i]] - beta[n])^2)
           }
           # aggregate across judges
           fp_alpha <- do.call(sum, fp_alpha_judge)      # ?? is this valid ??
           fpp_alpha <- do.call(sum, fpp_alpha_judge)
-          alpha[n] <- alpha[n] - fp_alpha * (-1) / fpp_alpha
+          alpha[n] <- alpha[n] - fp_alpha / fpp_alpha
           convergence_alpha_inner[i, n] <- alpha[n]                    # i = inner loop
     			if (!is.na(convergence_alpha_inner[i, n]) & !is.na(convergence_alpha_inner[i - 1, n]) &
     					abs(convergence_alpha_inner[i, n] - convergence_alpha_inner[i-1, n]) <= convergence_criteria[3]) {
