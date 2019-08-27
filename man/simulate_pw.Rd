@@ -4,8 +4,7 @@
 \alias{simulate_pw}
 \title{Simulate pairwise judgements}
 \usage{
-simulate_pw(performances, pairs, judges, criteria = 1, judge_alpha = 1,
-  criteria_alpha = 1)
+simulate_pw(performances, pairs, judges, criteria = 1, judge_alpha = 1)
 }
 \arguments{
 \item{performances}{data frame containing \code{performance} and \code{location}.}
@@ -20,9 +19,6 @@ vector giving the names of criteria.}
 
 \item{judge_alpha}{Vector equal in length to the number of judges, providing
 the discrimination parameter as a property of judges.}
-
-\item{criteria_alpha}{Vector equal in length to the number of criteria, providing
-the discrimination parameter as a property of criteria.}
 }
 \description{
 Simulate pairwise judgements
