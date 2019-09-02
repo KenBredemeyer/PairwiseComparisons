@@ -98,7 +98,7 @@ judge_lmf <- function(x,
 
     # discrimination -------------------------------------------------------------------------------------
     for (alpha_loop_i in 2:max_iterations["alpha_loop"]) {
-      for (n in 1:npersons) {                                        # Person loop
+      for (n in 1:njudges) {                                        # Person loop
         for (i in 2:max_iterations["inner_loop"]) {           # inner loop
           for (alpha_i in 1:njudges) {                          #  judge loop
             comparisons_i_judge[[alpha_i]] <- which(!is.na(x[ , n, alpha_i]))
