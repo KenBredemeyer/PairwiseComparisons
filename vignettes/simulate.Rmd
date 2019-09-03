@@ -1,0 +1,36 @@
+---
+title: "simulate judgements"
+author: "Ken Bredemeyer"
+date: "17/07/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "  ")
+```
+
+```{r preamble}
+library(pair.generator)
+library(PairwiseComparisons)
+
+options(stringsAsFactors = FALSE)
+```
+
+```{r make_pairs}
+performance_labels <- formatC(1:10, width = 2, format = "d", flag = "0")
+performances <- sim_betas(performance_labels)
+judges <- 5
+
+# create a set if pairs for each judge
+pairs_list <- list()
+for (i in seq_len(judges)) {
+	pairs_list[[i]] <- pairs_generate(performance_labels,
+		                                av_inclusions = 10,
+		                                inclusion_tolerance = 3)
+}
+```
+
+```{r simulate_judgements}
+simulation_result <- simulate_pw(performances, pairs_list, judges=5)
+head(simulation_result)
+```
