@@ -36,6 +36,11 @@ sim_betas <- function(performances, distribution = "normal", mean, sd, min, max)
 #' @export
 simulate_pw <- function(performances, pairs, judges, criteria=1,
 	                      judge_alpha =1) {
+	if (judges == 1) {
+		j1pairs <- pairs
+		pairs <- list()
+		pairs[[1]] <- j1pairs
+	}
   if (is.numeric(judges) && length(judges) == 1) {
   	judges <- paste0("Judge_", formatC(1:judges, width = nchar(judges), format = "d", flag = "0"))
   }
