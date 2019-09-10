@@ -117,7 +117,7 @@ judge_lmf <- function(x,
     					abs(convergence_alpha_inner[iteration_i, alpha_i] - convergence_alpha_inner[iteration_i-1, alpha_i]) <= convergence_criteria[3]) {
     			  break
     			}
-          se_alpha[alpha_i, ] <- 1 / sqrt(fpp_alpha[alpha_i])
+          se_alpha[alpha_i, ] <- 1 / sqrt(fpp_alpha[alpha_i] * 1/2)   # half information function for aggregating across dm.
         }
       }
       alpha <- alpha / geo_mean(alpha)
