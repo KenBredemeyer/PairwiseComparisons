@@ -50,3 +50,17 @@ outfit <- function(x, beta, type = "performance") {
 	rv <- data.frame(ID = dimnames(x)[[outfit_type]], outfit = outfit_statistics)
 	rv
 }
+
+#' Infit
+#' @export
+infit <- function(x, beta, type = "performance") {
+	infit_type <- switch(type, performance = 1, judge = 3, criterion = 4)
+	P <- probs(beta)
+ 	Information <- P * (1 - P)
+	z_array <- z(x, P)
+	IZ <- Information * z_array^2
+  top <- apply(IZ, infit_type, function(x) sum(x, na.rm = TRUE))
+  denom <- apply(Information, infit_type, function(x) sum(x, na.rm = TRUE))
+  result <- top / denom
+	data.frame(ID = colnames(x), infit=result)
+}
