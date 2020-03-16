@@ -36,6 +36,9 @@ sim_betas <- function(performances, distribution = "normal", mean, sd, min, max)
 #' @export
 simulate_pw <- function(performances, pairs, judges, criteria=1,
 	                      judge_alpha =1) {
+	stopifnot(class(performances) == "data.frame",
+		        colnames(performances) == c("performance", "location"))
+
 	if (judges == 1) {
 		j1pairs <- pairs
 		pairs <- list()
