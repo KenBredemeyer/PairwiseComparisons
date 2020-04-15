@@ -36,9 +36,12 @@ sim_betas <- function(performances, distribution = "normal", mean, sd, min, max)
 #' @export
 simulate_pw <- function(performances, pairs, judges, criteria=1,
 	                      judge_alpha =1) {
+  # check args
 	stopifnot(class(performances) == "data.frame",
 		        colnames(performances) == c("performance", "location"))
-
+  if (length(judges) > 1 || (is.numeric(judges) && judges > 1)) {
+  	stopifnot(inherits(pairs, "list"))
+  }
 	if (judges == 1) {
 		j1pairs <- pairs
 		pairs <- list()
