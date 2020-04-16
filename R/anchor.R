@@ -36,9 +36,15 @@ estimate_anch <- function(x, extremes, betas,
   		for (i in 2:loop_size[1]) {
   			probs <- exp(b[n] - bm) / (1 + exp(b[n] - bm))
   			if (any(n == extrm_i)) {                ## CHANGE TO HIGH AND LOW EXTREME
-	  			fp <- sum(involved * probs) - (sum(x[n,], na.rm = TRUE) - adjust_extreme)  # first deriviative
+  				if (sum(x[n, ], na.rm = TRUE) == 0) { # low extreme
+		  			fp <- sum(involved * probs) - (sum(x[n,], na.rm = TRUE) + adjust_extreme)  # first deriviative
+  				} else if (sum(x[, n], na.rm = TRUE) == 0) { # high extreme
+  					fp <- sum(involved * probs) - (sum(x[n,], na.rm = TRUE) - adjust_extreme)
+  				} else {
+  					stop("Error: check extremes")    # should never be called
+  				}
   			} else {
-  				fp <- sum(involved * probs) - sum(x[n,], na.rm = TRUE)
+  				fp <- sum(involved * probs) - sum(x[n,], na.rm = TRUE) # not necessary to calculate, since b[n] not updated (l.45)
   			}
   			fpp <- sum(involved * probs * (1 - probs))
   			if (any(n == extrm_i)) {        # update only extreme betas
