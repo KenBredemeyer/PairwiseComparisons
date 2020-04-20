@@ -16,6 +16,11 @@
 #' @export
 pairs_format2 <- function(x, judges = "all", criteria = "all", sum_across = c("judges", "criteria")) {
 	options(stringsAsFactors = FALSE)
+	# allow "Preferred" column, as well as "Selected"
+	if (any(colnames(standard_pairs) %in% c("preferred", "Preferred", "selected"))) {
+	  change_name_i <- which(colnames(standard_pairs) %in% c("preferred", "Preferred", "selected"))
+	  colnames(standard_pairs)[change_name_i] <- "Selected"
+	}
 	# allow a 2D or 3D array to be returned.  Must sum across judges, or criteria, or both
 	stopifnot(any(sum_across == "judges") | any(sum_across == "criteria"))
 	stopifnot(all(x[["Item"]] != x[["Item.1"]]))
