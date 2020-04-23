@@ -4,9 +4,11 @@
 \alias{judge_lmf}
 \title{Fit the Logistic Measurement Function}
 \usage{
-judge_lmf(x, convergence_criteria = c(0.01, 0.01, 0.01, 0.01, 0.001),
-  max_iterations = c(outer_loop = 20, beta_loop = 20, alpha_loop = 20,
-  inner_loop = 20))
+judge_lmf(
+  x,
+  convergence_criteria = c(0.01, 0.01, 0.01, 0.01, 0.001),
+  max_iterations = c(outer_loop = 20, beta_loop = 20, alpha_loop = 20, inner_loop = 20)
+)
 }
 \arguments{
 \item{x}{3D data matrix (performances \* performances \* judges)}

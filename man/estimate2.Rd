@@ -5,8 +5,7 @@
 \title{Newton-Raphson estimation - faster?
 Bradley-Terry-Luce}
 \usage{
-estimate2(x, convergence_criteria = c(0.001, 0.001), loop_size = c(30,
-  100))
+estimate2(x, convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100))
 }
 \arguments{
 \item{x}{data matrix of proportions}

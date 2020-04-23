@@ -4,7 +4,9 @@
 \name{gtpa18}
 \alias{gtpa18}
 \title{Graduate Teacher Performance Assessment 2018 Pairwise Comparison Project}
-\format{A data frame of pairwise comparisons}
+\format{
+A data frame of pairwise comparisons
+}
 \usage{
 data(gtpa18)
 }

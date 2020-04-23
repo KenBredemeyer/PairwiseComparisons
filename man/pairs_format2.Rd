@@ -4,8 +4,12 @@
 \alias{pairs_format2}
 \title{Create data matrix for estimation}
 \usage{
-pairs_format2(x, judges = "all", criteria = "all",
-  sum_across = c("judges", "criteria"))
+pairs_format2(
+  x,
+  judges = "all",
+  criteria = "all",
+  sum_across = c("judges", "criteria")
+)
 }
 \arguments{
 \item{x}{data.frame containing the variables \code{Judge, Criteria, Item,

@@ -4,8 +4,7 @@
 \alias{plot_PCCs}
 \title{Plot Person Characteristic Curves}
 \usage{
-plot_PCCs(data_matrix, betas, class_intervals = 4,
-  performances = "all")
+plot_PCCs(data_matrix, betas, class_intervals = 4, performances = "all")
 }
 \arguments{
 \item{data_matrix}{Square data frame containing pairwise comparison data
