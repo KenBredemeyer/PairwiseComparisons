@@ -3,6 +3,7 @@
 #' data matrix returned for estimation.
 #'
 #' @param x A data frame containing the raw results from pairwise comparisons
+#' @return Fulll data matrix of responses.
 #' @export
 pairs_format <- function(x) {
 	options(stringsAsFactors = FALSE)
