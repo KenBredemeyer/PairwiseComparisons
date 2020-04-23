@@ -12,11 +12,11 @@ pairs_format <- function(x) {
 	x <- complete_comparisons(x)
 	data_matrix <- data_matrix(x)
 	x <- data_matrix
-	x <- remove_xtrms(x)
-	xtrm <- xtrms(x)
+	#x <- remove_xtrms(x)
+	#xtrm <- xtrms(x)
 
-  attr(x, "data_matrix") <- list(data_matrix)
-  attr(x, "extremes") <- list(xtrm)
+  #attr(x, "data_matrix") <- list(data_matrix)
+  #attr(x, "extremes") <- list(xtrm)
   x
 }
 
