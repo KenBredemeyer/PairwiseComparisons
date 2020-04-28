@@ -74,43 +74,49 @@ remove_xtrms <- function(data_matrix) {
 	high_xtrm <- list()
 	low_xtrm <- list()
 	i <- 1
+	small_dm <- list()
 	# remove high extremes
 	if (any(colSums(data_matrix, na.rm = TRUE) == 0)) {
 		high_xtrm_i <- which(colSums(data_matrix, na.rm = TRUE) == 0)
 		high_xtrm[[i]] <- colnames(data_matrix)[high_xtrm_i]
-		data_matrix <- data_matrix[-high_xtrm_i , -high_xtrm_i]
+		small_dm[[i]] <- data_matrix[-high_xtrm_i , -high_xtrm_i]
 	}
 	# remove low extremes
 	if (any(rowSums(data_matrix, na.rm = TRUE) == 0)) {
 		low_xtrm_i <- which(rowSums(data_matrix, na.rm = TRUE) == 0)
 		low_xtrm[[i]] <- rownames(data_matrix)[low_xtrm_i]
-		data_matrix <- data_matrix[-low_xtrm_i, -low_xtrm_i]
+		small_dm[[i]] <- data_matrix[-low_xtrm_i, -low_xtrm_i]
 	}
-	while(dim(data_matrix)[1] < d[1]) { # repeat removing extrms while matrix gets smaller
-		d <- dim(data_matrix)
+	while(has_extremes(small_dm[[i]])) { # repeat removing extrms while matrix gets smaller
+		d <- dim(small_dm[[i]])
 		i <- i + 1
 		# remove high extremes
-		if (any(colSums(data_matrix, na.rm = TRUE) == 0)) {
-			high_xtrm_i <- which(colSums(data_matrix, na.rm = TRUE) == 0)
-			high_xtrm[[i]] <- colnames(data_matrix)[high_xtrm_i]
-			data_matrix <- data_matrix[-high_xtrm_i , -high_xtrm_i]
+		if (any(colSums(small_dm[[i-1]], na.rm = TRUE) == 0)) {
+			high_xtrm_i <- which(colSums(small_dm[[i-1]], na.rm = TRUE) == 0)
+			high_xtrm[[i]] <- colnames(small_dm[[i-1]])[high_xtrm_i]
+			small_dm[[i]] <- small_dm[[i-1]][-high_xtrm_i , -high_xtrm_i]
 		}
 		# remove low extremes
-		if (any(rowSums(data_matrix, na.rm = TRUE) == 0)) {
-			low_xtrm_i <- which(rowSums(data_matrix, na.rm = TRUE) == 0)
-			low_xtrm[[i]] <- rownames(data_matrix)[low_xtrm_i]
-			data_matrix <- data_matrix[-low_xtrm_i, -low_xtrm_i]
+		if (any(rowSums(small_dm[[i-1]], na.rm = TRUE) == 0)) {
+			low_xtrm_i <- which(rowSums(small_dm[[i-1]], na.rm = TRUE) == 0)
+			low_xtrm[[i]] <- rownames(small_dm[[i-1]])[low_xtrm_i]
+			small_dm[[i]] <- small_dm[[i-1]][-low_xtrm_i, -low_xtrm_i]
 		}
-		if (dim(data_matrix)[1] < 3) stop("data matrix too small. check nested extremes.")
+		if (dim(small_dm[[i]])[1] < 3) stop("data matrix too small. check nested extremes.")
 	}
-  attr(data_matrix, "extremes") <- list(c(unlist(low_xtrm), unlist(high_xtrm)))
-	data_matrix
+	nested_xtrms <- list()
+	xil <- max(length(low_xtrm), length(high_xtrm))
+	for (xi in seq_len(xil)) {
+		nested_xtrms[[xi]] <- unlist(c(low_xtrm[xi], high_xtrm[xi]))  # NULL can be combined without effect
+	}
+  attr(small_dm, "extremes") <- nested_xtrms
+	small_dm
 }
 
 #' extract extremes
 #' @export
 xtrms <- function(data_matrix) {
-	extremes <- attributes(data_matrix)$extremes[[1]]
+	extremes <- attributes(data_matrix)$extremes        #check!
 }
 
 #' detect extremes

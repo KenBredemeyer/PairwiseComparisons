@@ -106,13 +106,22 @@ estimate2 <- function(x, convergence_criteria = c(0.001, 0.001), loop_size = c(3
 #' @export
 estimate_betas <- function(x, adjust_extreme = 0.25) {
 	if(has_extremes(x)) {
-		x_small <- remove_xtrms(x)
-		x_extremes <- xtrms(x_small)
-		betas_small <- estimate(x_small)
-		betas <- estimate_anch(x, x_extremes, betas_small$b, adjust_extreme = adjust_extreme)
+
+		x_small <- remove_xtrms(x)  #x_small is list of data matrices
+		x_extremes <- rev(xtrms(x_small))  # list of removed performances (one element per nesting level)
+		data_matrices <- rev(c(list(x), x_small))# reverse order of lists: last nesting level (smallest) first.
+		betas <- list()
+		betas[[1]] <- estimate(data_matrices[[1]]) # smallest set of estimates first
+		# feed estimate_anch()  with one nesting level at a time
+		xil <- length(x_small)
+		for (i in seq_len(xil)) {
+			# x is next smallest data matrix
+			betas[[i+1]] <- estimate_anch(data_matrices[[i+1]], x_extremes[[i]], betas[[i]]$b, adjust_extreme = adjust_extreme)
+		}
+		rv <- betas[[i+1]] # return value = last iteration of estimation
 	} else {
-		betas <- estimate(x)
+		rv <- estimate(x)
 	}
-	betas
+	rv
 }
 
