@@ -75,17 +75,21 @@ remove_xtrms <- function(data_matrix) {
 	low_xtrm <- list()
 	i <- 1
 	small_dm <- list()
+	extremes <- list()
 	# remove high extremes
 	if (any(colSums(data_matrix, na.rm = TRUE) == 0)) {
 		high_xtrm_i <- which(colSums(data_matrix, na.rm = TRUE) == 0)
-		high_xtrm[[i]] <- colnames(data_matrix)[high_xtrm_i]
-		small_dm[[i]] <- data_matrix[-high_xtrm_i , -high_xtrm_i]
+		#high_xtrm[[i]] <- colnames(data_matrix)[high_xtrm_i]
 	}
 	# remove low extremes
 	if (any(rowSums(data_matrix, na.rm = TRUE) == 0)) {
 		low_xtrm_i <- which(rowSums(data_matrix, na.rm = TRUE) == 0)
-		low_xtrm[[i]] <- rownames(data_matrix)[low_xtrm_i]
-		small_dm[[i]] <- data_matrix[-low_xtrm_i, -low_xtrm_i]
+		#low_xtrm[[i]] <- rownames(data_matrix)[low_xtrm_i]
+	}
+	xtrms_i <- c(low_xtrm_i, high_xtrm_i)
+	if (length(xtrms_i > 0)) {
+		small_dm[[i]] <- data_matrix[-xtrms_i, -xtrms_i]
+		extremes[[i]] <- rownames(data_matrix)[xtrms_i]
 	}
 	while(has_extremes(small_dm[[i]])) { # repeat removing extrms while matrix gets smaller
 		d <- dim(small_dm[[i]])
@@ -94,22 +98,20 @@ remove_xtrms <- function(data_matrix) {
 		if (any(colSums(small_dm[[i-1]], na.rm = TRUE) == 0)) {
 			high_xtrm_i <- which(colSums(small_dm[[i-1]], na.rm = TRUE) == 0)
 			high_xtrm[[i]] <- colnames(small_dm[[i-1]])[high_xtrm_i]
-			small_dm[[i]] <- small_dm[[i-1]][-high_xtrm_i , -high_xtrm_i]
 		}
 		# remove low extremes
 		if (any(rowSums(small_dm[[i-1]], na.rm = TRUE) == 0)) {
 			low_xtrm_i <- which(rowSums(small_dm[[i-1]], na.rm = TRUE) == 0)
 			low_xtrm[[i]] <- rownames(small_dm[[i-1]])[low_xtrm_i]
-			small_dm[[i]] <- small_dm[[i-1]][-low_xtrm_i, -low_xtrm_i]
 		}
-		if (dim(small_dm[[i]])[1] < 3) stop("data matrix too small. check nested extremes.")
+		xtrms_i <- c(low_xtrm_i, high_xtrm_i)
+		if (length(xtrms_i > 0)) {
+			small_dm[[i]] <- small_dm[[i-1]][-xtrms_i, -xtrms_i]
+			extremes[[i]] <- rownames(small_dm[[i-1]])[xtrms_i]
+			if (dim(small_dm[[i]])[1] < 3) stop("data matrix too small. check nested extremes.")
+		}
 	}
-	nested_xtrms <- list()
-	xil <- max(length(low_xtrm), length(high_xtrm))
-	for (xi in seq_len(xil)) {
-		nested_xtrms[[xi]] <- unlist(c(low_xtrm[xi], high_xtrm[xi]))  # NULL can be combined without effect
-	}
-  attr(small_dm, "extremes") <- nested_xtrms
+  attr(small_dm, "extremes") <- extremes     # use names, not indeces!!
 	small_dm
 }
 
