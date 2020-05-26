@@ -86,7 +86,16 @@ remove_xtrms <- function(data_matrix) {
 		low_xtrm_i <- which(rowSums(data_matrix, na.rm = TRUE) == 0)
 		#low_xtrm[[i]] <- rownames(data_matrix)[low_xtrm_i]
 	}
-	xtrms_i <- c(low_xtrm_i, high_xtrm_i)
+	if (exists("low_xtrm_i") && exists("high_xtrm_i")) {
+		xtrms_i <- c(low_xtrm_i, high_xtrm_i)
+		rm(low_xtrm_i, high_xtrm_i)
+	}else if (exists("low_xtrm_i") && !exists("high_xtrm_i")) {
+		xtrms_i <- low_xtrm_i
+		rm(low_xtrm_i)
+	}else if (exists("high_xtrm_i") && !exists("low_xtrm_i")) {
+		xtrms_i <- high_xtrm_i
+		rm(high_xtrm_i)
+	}else stop("check extremes 98")
 	if (length(xtrms_i > 0)) {
 		small_dm[[i]] <- data_matrix[-xtrms_i, -xtrms_i]
 		extremes[[i]] <- rownames(data_matrix)[xtrms_i]
@@ -104,7 +113,16 @@ remove_xtrms <- function(data_matrix) {
 			low_xtrm_i <- which(rowSums(small_dm[[i-1]], na.rm = TRUE) == 0)
 			low_xtrm[[i]] <- rownames(small_dm[[i-1]])[low_xtrm_i]
 		}
-		xtrms_i <- c(low_xtrm_i, high_xtrm_i)
+		if (exists("low_xtrm_i") && exists("high_xtrm_i")) {
+			xtrms_i <- c(low_xtrm_i, high_xtrm_i)
+			rm(low_xtrm_i, high_xtrm_i)
+		}else if (exists("low_xtrm_i") && !exists("high_xtrm_i")) {
+			xtrms_i <- low_xtrm_i
+			rm(low_xtrm_i)
+		}else if (exists("high_xtrm_i") && !exists("low_xtrm_i")) {
+			xtrms_i <- high_xtrm_i
+			rm(high_xtrm_i)
+		}else stop("check extremes 98")
 		if (length(xtrms_i > 0)) {
 			small_dm[[i]] <- small_dm[[i-1]][-xtrms_i, -xtrms_i]
 			extremes[[i]] <- rownames(small_dm[[i-1]])[xtrms_i]
