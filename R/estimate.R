@@ -116,7 +116,7 @@ estimate_betas <- function(x, adjust_extreme = 0.25) {
 		xil <- length(x_small)
 		for (i in seq_len(xil)) {
 			# x is next smallest data matrix
-			betas[[i+1]] <- estimate_anch(data_matrices[[i+1]], x_extremes[[i]], betas[[i]]$b, adjust_extreme = adjust_extreme)
+			betas[[i+1]] <- estimate_anch(data_matrices[[i+1]], x_extremes[[i]], betas[[i]], adjust_extreme = adjust_extreme)
 		}
 		rv <- betas[[i+1]] # return value = last iteration of estimation
 	} else {

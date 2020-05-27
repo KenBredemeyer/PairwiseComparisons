@@ -20,13 +20,15 @@ estimate_anch <- function(x, extremes, betas,
   N <- dim(x)[1]
   # set initial estimates
   b <- vector("numeric", N)
-  b[beta_i] <- betas
+
+  b[beta_i] <- betas$b
   b[extrm_i] <- 0          # vector initiallized to 0 anyway
 
   iterate_b_inner <- matrix(0, nrow = loop_size[1], ncol = dim(x)[2]) # betas from inner loop
   convergence <- matrix(NA, nrow = loop_size[2], ncol = length(extrm_i)) # betas from the outer loop
   convergence[1, ] <- 0
   se <- matrix(NA, nrow = N, ncol = 1)
+  se[beta_i, 1] <- betas$se
 
   for (ot in 2:loop_size[2]) {  # outer loop
   	for (n in extrm_i) {            # person loop
