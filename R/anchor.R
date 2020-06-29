@@ -51,7 +51,7 @@ estimate_anch <- function(x, extremes, betas,
   					abs(iterate_b_inner[i, n] - iterate_b_inner[i-1, n]) <= convergence_criteria[1]) break}
   		se[n, ] <- 1 / sqrt(fpp)
   	}
-  	#b <- b - mean(b)
+  	b <- b - mean(b)
   	convergence[ot, ] <- b[extrm_i]
   	if (!any(is.na(convergence[ot, ])) & !any(is.na(convergence[ot-1, ])) &
   			max(abs(convergence[ot, ] - convergence[ot-1, ])) < convergence_criteria[2]) break
