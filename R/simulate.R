@@ -35,10 +35,11 @@ sim_betas <- function(performances, distribution = "normal", mean, sd, min, max)
 #'   the discrimination parameter as a property of judges.
 #' @export
 simulate_pw <- function(performances, pairs, judges, criteria=1,
-	                      judge_alpha =1) {
+	                      judge_alpha = rep(1, length(pairs))) {
   # check args
 	stopifnot(class(performances) == "data.frame",
 		        colnames(performances) == c("performance", "location"))
+	stopifnot(length(pairs) == length(judge_alpha))
   if (length(judges) > 1 || (is.numeric(judges) && judges > 1)) {
   	stopifnot(inherits(pairs, "list"))
   }
