@@ -4,9 +4,11 @@
 \alias{estimate_2pl}
 \title{Estimate parameters of the two parameter logistic model}
 \usage{
-estimate_2pl(x, convergence_criteria = c(0.01, 0.01, 0.01, 0.01, 0.001),
-  max_iterations = c(outer_loop = 20, beta_loop = 20, alpha_loop = 20,
-  inner_loop = 20))
+estimate_2pl(
+  x,
+  convergence_criteria = c(0.01, 0.01, 0.01, 0.01, 0.001),
+  max_iterations = c(outer_loop = 20, beta_loop = 20, alpha_loop = 20, inner_loop = 20)
+)
 }
 \description{
 Estimate parameters of the two parameter logistic model

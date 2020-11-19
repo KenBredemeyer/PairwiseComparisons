@@ -4,7 +4,13 @@
 \alias{simulate_pw}
 \title{Simulate pairwise judgements}
 \usage{
-simulate_pw(performances, pairs, judges, criteria = 1, judge_alpha = 1)
+simulate_pw(
+  performances,
+  pairs,
+  judges,
+  criteria = 1,
+  judge_alpha = rep(1, length(pairs))
+)
 }
 \arguments{
 \item{performances}{data frame containing \code{performance} and \code{location}.}

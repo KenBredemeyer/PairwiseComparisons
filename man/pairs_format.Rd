@@ -9,6 +9,9 @@ pairs_format(x)
 \arguments{
 \item{x}{A data frame containing the raw results from pairwise comparisons}
 }
+\value{
+Fulll data matrix of responses.
+}
 \description{
 data matrix returned for estimation.
 }

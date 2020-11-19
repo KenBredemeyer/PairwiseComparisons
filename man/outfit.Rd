@@ -19,3 +19,10 @@ Data frame of names and outfit statistics.
 \description{
 Return outfit test statistics for each performance.
 }
+\examples{
+x.dm <- pairs_format(sim_judgements_small)
+x.array <- pairs_array(sim_judgements_small)
+performance_estimates <- estimate_betas(x.dm)
+outfit(x.array, performance_estimates$b)
+
+}
