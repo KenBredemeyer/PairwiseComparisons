@@ -97,4 +97,5 @@ pairs_array <- function(x) {
 	                Item ~ Item.1 ~ Judge ~ Criteria,
 	                drop = FALSE,
 	                value.var = "Selected")
+  							  #fun.aggregate = sum2)
 }
