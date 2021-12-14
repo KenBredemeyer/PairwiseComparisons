@@ -41,7 +41,7 @@ simulate_pw <- function(performances, pairs, judges, criteria=1,
 		        colnames(performances) == c("performance", "location"))
 	stopifnot(length(pairs) == length(judge_alpha))
   if (length(judges) > 1 || (is.numeric(judges) && judges > 1)) {
-  	stopifnot(inherits(pairs, "list"))
+  	#stopifnot(inherits(pairs, "list"))
   }
 	if (judges == 1) {
 		j1pairs <- pairs
