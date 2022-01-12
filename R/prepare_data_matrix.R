@@ -175,7 +175,8 @@ proportions <- function(data_matrix) {
 
 
 #   -----------------------------------------------------------------------
-## sum so that NA + NA = NA, and NA + 0 = 0
+#' sum so that NA + NA = NA, and NA + 0 = 0
+#' @export
 sum2 <- function(x) {
 	if (!all(is.na(x))) {
 		sum(x, na.rm = TRUE)
