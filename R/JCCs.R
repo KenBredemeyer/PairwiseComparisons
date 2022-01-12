@@ -14,7 +14,7 @@
 #'
 #' @export
 plot_JCCs <- function(comparisons, estimates, class_intervals, sub_title = NULL) {
-	if ("location" %in% names(performances)) estimates$beta <- estimates$location
+	#if ("location" %in% names(performances)) estimates$beta <- estimates$location
 	stopifnot(!is.null(comparisons$Judge), !is.null(estimates$b), class_intervals %% 1 == 0,
 		!any(is.na(estimates$b)))
 
