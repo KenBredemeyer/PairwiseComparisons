@@ -49,7 +49,7 @@ estimate_BTL <- function(x, extremes, betas,
 			se[n, ] <- 1 / sqrt(fpp)
 		}
 		b <- b - mean(b)
-		convergence[ot, ] <- b[extrm_i]
+		convergence[ot, ] <- b
 		if (!any(is.na(convergence[ot, ])) & !any(is.na(convergence[ot-1, ])) &
 				max(abs(convergence[ot, ] - convergence[ot-1, ])) < convergence_criteria[2]) break
 	}
