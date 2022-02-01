@@ -12,5 +12,8 @@ estimate_betas(x, adjust_extreme = 0.25)
 \item{adjust_extreme}{Adjustment for extremes}
 }
 \description{
-Estimate ability.
+Estimate ability. \code{estimate_betas} estimates non-extreme performances
+first, then estimates extreme performances one level at a time. If the data
+contain many levels of nested extremes, then \code{estimate_betas} will
+likely take a long time for estimates to converge, and may fail.
 }
