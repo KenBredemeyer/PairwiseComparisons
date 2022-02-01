@@ -100,7 +100,11 @@ estimate2 <- function(x, convergence_criteria = c(0.001, 0.001), loop_size = c(3
 
 #' Estimate BTL Parameters
 #'
-#' Estimate ability.
+#' Estimate ability. \code{estimate_betas} estimates non-extreme performances
+#' first, then estimates extreme performances one level at a time. If the data
+#' contain many levels of nested extremes, then \code{estimate_betas} will
+#' likely take a long time for estimates to converge, and may fail.
+#'
 #' @param x data matrix of pairwise comparisons
 #' @param adjust_extreme Adjustment for extremes
 #' @export
