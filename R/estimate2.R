@@ -12,19 +12,6 @@
 #' @param loop_size Numeric vector length 2.  Inner maximum loops and outer
 #'   maximum loops.
 #' @export
-<<<<<<< HEAD
-=======
-estimate_BTL <- function(x, adjust_extremes = 0.25, convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100)) {
-	if (any(colSums(data_matrix, na.rm = TRUE) == 0)) {
-		high_xtrm_i <- which(colSums(data_matrix, na.rm = TRUE) == 0)
-		for (hi in seq_along(high_xtrm_i))
-	}}
-
-
-
-
-# take2: adapt `estimate_anch()` (merge with estimate())
->>>>>>> 41a066e1e41393eb704d82ec0f3f92950270e008
 estimate_BTL <- function(x, extremes, betas,
 													adjust_extremes = 0.25,
 													convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100)) {
@@ -62,11 +49,9 @@ estimate_BTL <- function(x, extremes, betas,
 			se[n, ] <- 1 / sqrt(fpp)
 		}
 		b <- b - mean(b)
-<<<<<<< HEAD
+
 		convergence[ot, ] <- b
-=======
-		convergence[ot, ] <- b[extrm_i]
->>>>>>> 41a066e1e41393eb704d82ec0f3f92950270e008
+
 		if (!any(is.na(convergence[ot, ])) & !any(is.na(convergence[ot-1, ])) &
 				max(abs(convergence[ot, ] - convergence[ot-1, ])) < convergence_criteria[2]) break
 	}
@@ -74,10 +59,3 @@ estimate_BTL <- function(x, extremes, betas,
 	attr(results, "convergence") <- list(convergence = convergence)
 	results
 }
-<<<<<<< HEAD
-=======
-
-convergence <- function(x) {
-	attributes(x)$convergence$convergence
-}
->>>>>>> 41a066e1e41393eb704d82ec0f3f92950270e008
