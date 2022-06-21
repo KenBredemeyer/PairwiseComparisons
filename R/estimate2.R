@@ -12,9 +12,7 @@
 #' @param loop_size Numeric vector length 2.  Inner maximum loops and outer
 #'   maximum loops.
 #' @export
-estimate_BTL <- function(x, extremes, betas,
-													adjust_extremes = 0.25,
-													convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100)) {
+estimate_BTL <- function(x, adjust_extremes = 0.25, convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100)) {
 
 	N <- dim(x)[1]
 	# set initial estimates
@@ -59,3 +57,10 @@ estimate_BTL <- function(x, extremes, betas,
 	attr(results, "convergence") <- list(convergence = convergence)
 	results
 }
+
+
+
+convergence <- function(x) {
+	attributes(x)$convergence$convergence
+}
+
