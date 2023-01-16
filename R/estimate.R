@@ -6,6 +6,10 @@
 #'   outer convergence criteria.
 #' @param loop_size Numeric vector length 2.  Inner maximum loops and outer
 #'   maximum loops.
+#' @references Bradley, R. A., and Terry, M. 1952. The rank analysis of
+#'   incomplete block designs: I. the method of paired comparisons. Biometrika,
+#'   39(3):324–345.
+#'   Luce, R.D. (1959). Individual choice behavior. New York: Wiley.
 #' @export
 estimate <- function(x, convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100)) {
   N <- dim(x)[1]
@@ -55,6 +59,10 @@ convergence <- function(x) {
 #'   outer convergence criteria.
 #' @param loop_size Numeric vector length 2.  Inner maximum loops and outer
 #'   maximum loops.
+#' @references Bradley, R. A., and Terry, M. 1952. The rank analysis of
+#'   incomplete block designs: I. the method of paired comparisons. Biometrika,
+#'   39(3):324–345.
+#'   Luce, R.D. (1959). Individual choice behavior. New York: Wiley.
 #' @export
 estimate2 <- function(x, convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100)) {
   N <- dim(x)[1]
@@ -107,6 +115,10 @@ estimate2 <- function(x, convergence_criteria = c(0.001, 0.001), loop_size = c(3
 #'
 #' @param x data matrix of pairwise comparisons
 #' @param adjust_extreme Adjustment for extremes
+#' @references Bradley, R. A., and Terry, M. 1952. The rank analysis of
+#'   incomplete block designs: I. the method of paired comparisons. Biometrika,
+#'   39(3):324–345.
+#'   Luce, R.D. (1959). Individual choice behavior. New York: Wiley.
 #' @export
 estimate_betas <- function(x, adjust_extreme = 0.25) {
 	if(has_extremes(x)) {

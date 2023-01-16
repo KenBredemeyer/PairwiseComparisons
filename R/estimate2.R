@@ -11,6 +11,10 @@
 #'   outer convergence criteria.
 #' @param loop_size Numeric vector length 2.  Inner maximum loops and outer
 #'   maximum loops.
+#' @references Bradley, R. A., and Terry, M. 1952. The rank analysis of
+#'   incomplete block designs: I. the method of paired comparisons. Biometrika,
+#'   39(3):324–345.
+#'   Luce, R.D. (1959). Individual choice behavior. New York: Wiley.
 #' @export
 estimate_BTL <- function(x, adjust_extremes = 0.25, convergence_criteria = c(0.001, 0.001), loop_size = c(30, 100)) {
 

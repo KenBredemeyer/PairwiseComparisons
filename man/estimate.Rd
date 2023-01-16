@@ -20,3 +20,9 @@ outer convergence criteria.}
 Newton-Raphson estimation
 Bradley-Terry-Luce
 }
+\references{
+Bradley, R. A., and Terry, M. 1952. The rank analysis of
+  incomplete block designs: I. the method of paired comparisons. Biometrika,
+  39(3):324–345.
+  Luce, R.D. (1959). Individual choice behavior. New York: Wiley.
+}

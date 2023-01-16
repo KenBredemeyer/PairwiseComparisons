@@ -17,3 +17,9 @@ first, then estimates extreme performances one level at a time. If the data
 contain many levels of nested extremes, then \code{estimate_betas} will
 likely take a long time for estimates to converge, and may fail.
 }
+\references{
+Bradley, R. A., and Terry, M. 1952. The rank analysis of
+  incomplete block designs: I. the method of paired comparisons. Biometrika,
+  39(3):324–345.
+  Luce, R.D. (1959). Individual choice behavior. New York: Wiley.
+}

@@ -23,3 +23,6 @@ return, to use as a sub-title in the plots.}
 Plot left/right difference in logits against proportion of left selected for
 each class interval.  Overlay probability curve.
 }
+\references{
+Steve Humphry. Personal correspondance.
+}

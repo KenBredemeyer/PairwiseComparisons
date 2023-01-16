@@ -11,7 +11,7 @@
 #'   form.
 #' @param sub_title Character vector, the same length as the number of plot to
 #'   return, to use as a sub-title in the plots.
-#'
+#' @references Steve Humphry. Personal correspondance.
 #' @export
 plot_JCCs <- function(comparisons, estimates, class_intervals, sub_title = NULL) {
 	#if ("location" %in% names(performances)) estimates$beta <- estimates$location

@@ -1,4 +1,8 @@
 #' Estimate parameters of the two parameter logistic model
+#' @references Birnbaum, A. (1968) Some Latent Trait Models and Their Use in
+#'   Inferring an Examinee’s Ability. In: Lord, F.M. and Novick, M.R., Eds.,
+#'   Statistical Theories of Mental Test Scores, Addison-Wesley, Reading,
+#'   397-479.
 #' @export
 estimate_2pl <- function(x,
                          convergence_criteria = c(0.01, 0.01, 0.01, 0.01, 0.001),

@@ -5,6 +5,9 @@
 #' @param x 3D data matrix (performances \* performances \* judges)
 #' @param convergence_criteria Stopping criteria
 #' @param max_iterations Maximum iterations
+#' @references Humphry, S. M., Andrich, D. (Supervisor) (2005). Maintaining a
+#'   common arbitrary unit in social measurement. Doctoral thesis.
+#'   \url{https://librarysearch.murdoch.edu.au/discovery/delivery?vid=61MUN_INST:ResearchRepository&repId=12129673560007891#13130840450007891}
 #'
 #' @export
 judge_lmf <- function(x,
