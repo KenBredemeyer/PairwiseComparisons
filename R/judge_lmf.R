@@ -9,6 +9,8 @@
 #'   common arbitrary unit in social measurement. Doctoral thesis.
 #'   \url{https://librarysearch.murdoch.edu.au/discovery/delivery?vid=61MUN_INST:ResearchRepository&repId=12129673560007891#13130840450007891}
 #'
+#'   Humphry S. Item set discrimination and the unit in the Rasch model. J Appl
+#'   Meas. 2012;13(2):165-80.
 #' @export
 judge_lmf <- function(x,
                       convergence_criteria = c(0.01, 0.01, 0.01, 0.01, 0.001),
